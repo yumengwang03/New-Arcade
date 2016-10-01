@@ -1,0 +1,17 @@
+{
+  "name": "p5play-animation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "sketch.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "yumeng",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.0",
+    "osc-min": "^1.1.1",
+    "socket.io": "^1.4.8",
+    "ws": "^1.1.1"
+  }
+}

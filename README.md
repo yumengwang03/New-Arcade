@@ -1,2 +1,2 @@
-# New_Arcade
+# New-Arcade
 HW for New Arcade
