@@ -1,0 +1,139 @@
+[{
+        "isText": true,
+        "question": "What is the maximum character count for an SMS message?",
+        "options": [140, 160, 153, 700, 918, 999],
+        "answer": 5
+    },
+    {
+        "isText": true,
+        "question": "What is the correct spelling for a system built to carry water?",
+        "options": ["aquaduct", "aguaduct", "aqueduc", "aqueduct", "aquaduck", "aquiduct"],
+        "answer": 4
+    },
+    {
+        "isText": true,
+        "question": "If Chuck tells everyone he is a &ldquo;numismatist&rdquo;, they would know he collects which of the following?",
+        "options": ["Maps", "Coins", "Spoons", "Numbers", "Postcards", "Pins"],
+        "answer": 2
+    },
+    {
+        "isText": true,
+        "question": "Thirty percent of forty percent is equal to twenty percent of what percent?",
+        "options": [35, 40, 45, 50, 55, 60],
+        "answer": 6
+    },
+    {
+        "isText": true,
+        "question": "Which European country borders France to the south?",
+        "options": ["Spain", "Switzerland", "Italy", "Germany", "England", "Portugal"],
+        "answer": 1
+    },
+    {
+        "isText": true,
+        "question": "What is the temperature at which water boils at sea level in Fahrenheit?",
+        "options": [100, 200, 212, 373, 160, 297],
+        "answer": 3
+    },
+    {
+        "isText": true,
+        "question": "What is the answer to the following equation: 4+4x4-4+4=?",
+        "options": [32, 20, 12, 24, 16, 18],
+        "answer": 2
+    },
+    {
+        "isText": true,
+        "question": "Which of the following is the scientific term for an organism that makes its food from inorganic materials?",
+        "options": ["Phototroph", "Heterotroph", "Necrotroph", "Autotroph", "Chemotroph", "Mixotroph"],
+        "answer": 4
+    },
+    {
+        "isText": true,
+        "question": "Which word contains a long vowel sound in the following sentence? 'Never underestimate the turtle of doom'",
+        "options": ["Never", "Underestimate", "The", "Turtle", "Of", "Doom"],
+        "answer": 2
+    },
+    {
+        "isText": true,
+        "question": "Which one of the following objects is different from the others?",
+        "options": ["shampoo", "sponge", "tear", "cloud", "sea", "orange juice"],
+        "answer": 2
+    },
+    {
+        "isText": true,
+        "question": "What is the next number in the following sequence: 2, 4, 12, 48, ___?",
+        "options": [52, 60, 96, 100, 144, 240],
+        "answer": 6
+    },
+    {
+        "isText": true,
+        "question": "Which activity is different from the others?",
+        "options": ["chew", "nibble", "bite", "swallow", "lick", "masticate"],
+        "answer": 4
+    },
+    {
+        "isText": true,
+        "question": "Which activity is different from the others?",
+        "options": ["slumber", "snore", "yawn", "nap", "doze", "dream"],
+        "answer": 3
+    },
+    {
+        "isText": true,
+        "question": "Which number does not fit in the sequence?",
+        "options": [2, 4, 10, 28, 84, 244],
+        "answer": 5
+    },
+    {
+        "isText": true,
+        "question": "If you count from one to hundred, how many threes will you pass on the way?",
+        "options": [22, 19, 20, 28, 10, 21],
+        "answer": 3
+    },
+    {
+        "isText": true,
+        "question": "2, 3, 5, 9, 17, 33 Which number is the next?",
+        "options": [63, 64, 65, 66, 67, 68],
+        "answer": 3
+    },
+    {
+        "isText": true,
+        "question": "Which of the following is a noun meaning social awkwardness?",
+        "options": ["Vertigo", "Behemoth", "Gaucherie", "Hovel", "Mendacity", "Curmudgeon"],
+        "answer": 3
+    },
+    {
+        "isText": true,
+        "question": "Which of the following is a noun meaning &ldquo;a distorted representation of something&rdquo;?",
+        "options": ["Parapet", "Altruism", "Utopia", "Verbiage", "Travesty", "Complicity"],
+        "answer": 5
+    },
+    {
+        "isText": true,
+        "question": "Which of the following is a noun meaning &ldquo;a distorted representation of something&rdquo;?",
+        "options": ["Parapet", "Altruism", "Utopia", "Verbiage", "Travesty", "Complicity"],
+        "answer": 5
+    },
+    {
+        "isText": false,
+        "question": "Which of the following is categorized as a <i>cumulus</i> cloud?",
+        "options": ["cloud0.gif", "cloud1.gif", "cloud2.gif", "cloud3.gif", "cloud4.gif", "cloud5.gif"],
+        "answer": 2
+    },
+    {
+        "isText": false,
+        "question": "shape.png",
+        "options": ["shape0.png", "shape1.png", "shape2.png", "shape3.png", "shape4.png", "shape5.png"],
+        "answer": 5
+    },
+    {
+        "isText": false,
+        "question": "polygon.png",
+        "options": ["polygon0.png", "polygon1.png", "polygon2.png", "polygon3.png", "polygon4.png", "polygon5.png"],
+        "answer": 6
+    },
+    {
+        "isText": false,
+        "question": "triangle.png",
+        "options": ["triangle.png", "triangle.png", "triangle.png", "triangle.png", "triangle.png", "triangle.png"],
+        "answer": 5
+    }
+]
