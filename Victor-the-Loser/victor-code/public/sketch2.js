@@ -7,7 +7,7 @@ var isAnswered = false;
 var buttonNumber = 6;
 var timer; // timer for setInterval in timing function
 var countdown;
-var questionTime = 4000; // time allowed for each question
+var questionTime = 12000; // time allowed for each question
 var timeIndicator;
 
 // start screen
@@ -224,17 +224,17 @@ var essayQuestion = [{
     "isText": true,
     "question": "Dog and Cat. Coffee and Tea. Great Gatsby and Catcher in the Rye. Everyone knows there are two types of people in the world. What are they? (Word Limit = 300)",
     "options": ["V", "I", "C", "T", "O", "R"],
-    "answer": 123456
+    "answer": 7
 }, {
     "isText": true,
     "question": "What is the meaning of victory?",
     "options": ["V", "I", "C", "T", "O", "R"],
-    "answer": 123456
+    "answer": 7
 }, {
     "isText": true,
     "question": "Find x.",
     "options": ["V", "I", "C", "T", "O", "R"],
-    "answer": 123456
+    "answer": 7
 }];
 
 function preload() {
@@ -487,8 +487,8 @@ function getQuestion(index) {
     // console.log("Is last question: " + lastQuestion);
 
     if (currentLevel == 3) {
-        //randomMode = Math.round(Math.random());
-        randomMode = 0;
+        randomMode = Math.round(Math.random());
+        //randomMode = 0;
         //console.log(randomMode);
     }
     result = 0;
@@ -512,9 +512,11 @@ function getQuestion(index) {
         }
 
         rightAnswer = questionList[index].answer;
+        var sendingAnswer = rightAnswer + 10 * currentLevel;
+        //console.log("I am sending " + sendingAnswer);
 
         socket.emit('toServer', {
-            answer: rightAnswer + 10 * currentLevel
+            answer: sendingAnswer
         });
 
 
