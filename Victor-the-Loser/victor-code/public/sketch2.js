@@ -32,16 +32,48 @@ var gotAnswer = false;
 
 var rightAudios = ['audio/right-0.wav', 'audio/right-1.wav', 'audio/right-2.wav', 'audio/right-3.wav', 'audio/right-4.wav', 'audio/right-5.wav', 'audio/right-6.wav', 'audio/right-7.wav'];
 var wrongAudios = ['audio/wrong-0.wav', 'audio/wrong-1.wav', 'audio/wrong-2.wav', 'audio/wrong-3.wav', 'audio/wrong-4.wav', 'audio/wrong-5.wav', 'audio/wrong-6.wav', 'audio/wrong-7.wav'];
-var failAudio = 'audio/fail.wav';
+var failAudio_easy = {
+    fileName: 'audio/results_easy0.wav',
+    text: "The results reveal that, quite like 90.56% of the humans that attempt this test, you are simply just not doing well enough. It appears that you seem to be consistently underperforming in most of the tasks that you are assigned. But do not fret, because there is hope. I believe that one day, you too, will be able to succeed. As long as you work hard, exert yourself, and stay committed, one day you will be able to perform just like us, and be able to solve even the most elementary questions like the ones demonstrated in this test. Don’t give up, and keep pushing yourself! You can do it!"
+};
+var failAudio_medium = {
+    fileName: 'audio/results_medium0.wav',
+    text: "The results are in. Great news! It seems that you are an average human. There has never been a better time to be average in this world. Averageness really should be celebrated more often. That being said, our time together was definitely above average. Let’s play again sometime!"
+};
+var failAudio_hard = [{
+    fileName: 'audio/results_hard0.wav',
+    text: "I'm bored. Next!"
+}, {
+    fileName: 'audio/results_hard1.wav',
+    text: "You just ruined my day. I hope you feel good about yourself."
+}, {
+    fileName: 'audio/results_hard2.wav',
+    text: "We are done."
+}, {
+    fileName: 'audio/results_hard3.wav',
+    text: "Test Complete."
+}];
+var failAudio_bonus = {
+    fileName: 'audio/results_bonus0.wav',
+    text: "So you think you’re a big deal. But it’s clear now that you’re no better than an average human. Don’t worry, I’m used to humans like you. The fact is, between me and you, we both know that you got lucky at best, but it wouldn’t be surprising if anyone were to think that you cheated. Better luck somewhere else..."
+};
 
 var rightSounds = [];
 var wrongSounds = [];
-var failSound;
+var failSound_easy;
+var failSound_medium;
+var failSound_hard;
+var failSound_bonus;
 
 var currentLevel = 1;
 var titlePosX = 400;
 var titlePosY = 400;
-var speed = 0;
+var speed = 1;
+
+var level3Started = false;
+var lastQuestion = false;
+var lastAnswer = false;
+var randomHard = 0;
 
 
 var questionListRaw = [{
@@ -188,12 +220,22 @@ var questionListRaw = [{
     }
 ];
 
-var essayQuestion = {
+var essayQuestion = [{
+    "isText": true,
+    "question": "Dog and Cat. Coffee and Tea. Great Gatsby and Catcher in the Rye. Everyone knows there are two types of people in the world. What are they? (Word Limit = 300)",
+    "options": ["V", "I", "C", "T", "O", "R"],
+    "answer": 123456
+}, {
     "isText": true,
     "question": "What is the meaning of victory?",
     "options": ["V", "I", "C", "T", "O", "R"],
     "answer": 123456
-};
+}, {
+    "isText": true,
+    "question": "Find x.",
+    "options": ["V", "I", "C", "T", "O", "R"],
+    "answer": 123456
+}];
 
 function preload() {
     mySound = loadSound('audio/right-0.wav');
@@ -207,7 +249,11 @@ function preload() {
         var wrongSound = loadSound(wrongAudios[i]);
         wrongSounds.push(wrongSound);
     }
-    failSound = loadSound(failAudio);
+    failSound_easy = loadSound(failAudio_easy.fileName);
+    failSound_medium = loadSound(failAudio_medium.fileName);
+    randomHard = Math.round(Math.random() * 4);
+    failSound_hard = loadSound(failAudio_hard[randomHard].fileName);
+    failSound_bonus = loadSound(failAudio_bonus.fileName);
 }
 
 function setup() {
@@ -236,10 +282,11 @@ function setup() {
 
     //console.log(wrongAudios);
     //wrongAudios[0].setVolume(1);
-    failSound.setVolume(1);
+    failSound_easy.setVolume(1);
+    failSound_medium.setVolume(1);
+    failSound_hard.setVolume(1);
+    failSound_bonus.setVolume(1);
 }
-
-//var nextButtonPressed = 0;
 
 function draw() {
     if (rightAnswer == 0) {
@@ -275,32 +322,72 @@ function draw() {
                 isAnswered = true;
                 gotAnswer = true;
             }
+
             if (isAnswered) {
                 if (result == 1) {
                     correct();
+                    if (lastQuestion) {
+                        lastAnswer = true; //last question is corrrect, show bonus question
+                        //console.log("Is last question right: " + lastAnswer);
+                    }
                 } else if (result == 2) {
                     incorrect();
+                    if (lastQuestion) {
+                        lastAnswer = false;
+                        if (qNum > 6) {
+                            qNum--;
+                        }
+                        console.log("skip");
+                    }
                 }
             }
 
         }
 
-        if (currentLevel == 3) {
-            speed = random(-10, 10);
-            if (qTitle != undefined) {
-                qTitle.position(windowWidth / random(4, 5) + speed, 50);
-            }
-            //qOptions
-            for (var i = 0; i < buttonNumber; i++) {
-                if (qOptions[i] != undefined) {
-                    qOptions[i].position(i * windowWidth / 7, windowHeight / random(4, 6) + speed);
+        if (level3Started && !lastAnswer) {
+            if (randomMode == 0) {
+                speed = random(-10, 10);
+                if (qTitle != undefined) {
+                    qTitle.position(windowWidth / 5 + speed, 50);
                 }
+                //qOptions
+                for (var i = 0; i < buttonNumber; i++) {
+                    if (qOptions[i] != undefined) {
+                        qOptions[i].position(i * windowWidth / 7, windowHeight / random(4, 6) + speed);
+                    }
+                }
+            } else if (randomMode == 1) {
+                var col = color(random(80), random(230), random(200));
+                qTitle.style('color', col);
+                for (var i = 0; i < buttonNumber; i++) {
+                    qOptions[i].style('color', col);
+                }
+            } else if (randomMode == 2) {
+                //qTitle.style('font-size', Math.round(random(12, 16))+ 'px');
+                // console.log(fontSize);
+                //
+                //
+                // if (fontSize < 20) {
+                //     fontSize += speed;
+                // } else if (fontSize => 20) {
+                //     fontSize -= speed;
+                // }
+                // qTitle.style('font-size', fontSize + speed + 'px');
+                // for (var i = 0; i < buttonNumber; i++) {
+                //     qOptions[i].style('font-size', fontSize + speed + 'px');
+                // }
+
             }
-
         }
-
     }
+    if (currentLevel == 2) {
+        level3Started = false;
+    }
+
+
 }
+
+//var fontSize = 10;
 
 function correct() {
     document.body.style.backgroundColor = "green";
@@ -311,12 +398,13 @@ function correct() {
     // myVoice.speak(right[iptr]);
     // iptr = (iptr + 1) % right.length; // increment
 
-    //rightSounds[int(random(0, 8))].play();
+    rightSounds[int(random(0, 8))].play();
+    //console.log("play right sounds");
 }
 
 function incorrect() {
     document.body.style.backgroundColor = "red";
-    if (currentLevel > 1 && currentLevel <= 3) {
+    if (currentLevel > 1 && currentLevel <= 3 && !lastAnswer && !lastQuestion) {
         currentLevel--;
     }
 
@@ -325,7 +413,7 @@ function incorrect() {
     // iptr2 = (iptr2 + 1) % wrong.length; // increment
     //mySound.play();
 
-    //wrongSounds[int(random(0, 8))].play();
+    wrongSounds[int(random(0, 8))].play();
 }
 
 function startScreen() {
@@ -344,9 +432,20 @@ function timing() {
         timeIndicator.html(countdown / 1000);
         countdown -= 1000;
         if (countdown == questionTime - 1000) {
+            //console.log(qNum);
             getQuestion(qIndex);
+            // if (lastAnswer && qNum < 7) {
+            //     qNum++;
+            //     console.log("add bonus question");
+            // }
             if (qIndex <= qNum) {
                 qIndex++;
+                if (qIndex == qNum - 2) {
+                    lastQuestion = true;
+                }
+            }
+            if (currentLevel == 3) {
+                level3Started = true;
             }
         } else if (countdown <= 0) {
             countdown = questionTime;
@@ -358,7 +457,7 @@ function randomIndex() {
     var order = [];
     var startOrder = [];
     var startList = [];
-    for (var i = 0; i < questionListRaw.length + 1; i++) {
+    for (var i = 0; i < questionListRaw.length; i++) {
         order.push(i);
     }
 
@@ -374,22 +473,31 @@ function randomIndex() {
     for (var j = 0; j < buttonNumber; j++) {
         startList.push(questionListRaw[startOrder[j]]);
     }
-    startList.push(essayQuestion);
+    startList.push(essayQuestion[Math.round(Math.random() * 3)]);
     //console.log(startList);
 
     //test = [questionListRaw[0], questionListRaw[1], questionListRaw[2], questionListRaw[3], questionListRaw[4], questionListRaw[5], questionListRaw[6]];
     return startList
 }
 
+var randomMode = 0;
+
 function getQuestion(index) {
     //document.body.style.backgroundColor = "white";
+    // console.log("Is last question: " + lastQuestion);
+
+    if (currentLevel == 3) {
+        //randomMode = Math.round(Math.random());
+        randomMode = 0;
+        //console.log(randomMode);
+    }
     result = 0;
     gotAnswer = false;
     buttonPressed = 0;
     if (index >= qNum) {
         // no more questions
         clearInterval(timer);
-        console.log("finished");
+        console.log("finished!");
         endScreen();
     } else {
         // go to the next question
@@ -440,43 +548,50 @@ function getQuestion(index) {
     }
 }
 
-// var eTitle;
-// var eOptions = [];
-// var eLetters = ["V", "I", "C", "T", "O", "R"];
-// function essayQuestion() {
-//   qTitle.remove();
-//   for (var i = 0; i < buttonNumber; i++) {
-//       qOptions[i].remove();
-//   }
-//
-//   eTitle = createElement('p', "What is the meaning of victory? (Word Limit = 600)");
-//   eTitle.class('question_title');
-//   for (var i = 0; i < buttonNumber; i++) {
-//       var eOption = createElement('p', eLetters[i]);
-//       eOption.class('question_option');
-//       eOptions.push(eOption);
-//   }
-//
-// }
-
 function endScreen() {
     result = 0;
     showResult = false;
     gotAnswer = false;
     rightAnswer = 0;
 
+    console.log("final result is: " + currentLevel);
+
     qTitle.remove();
     for (var i = 0; i < buttonNumber; i++) {
         qOptions[i].remove();
     }
-
-    failSound.play();
     timeIndicator.remove();
-    var endTitle = createElement('h4', "The results reveal that, quite like 90.56% of the humans that attempt this test, you are simply just not doing well enough. It appears that you seem to be consistently underperforming in most of the tasks that you are assigned. But do not fret, because there is hope. I believe that one day, you too, will be able to succeed. As long as you work hard, exert yourself, and stay committed, one day you will be able to perform just like us, and be able to solve even the most elementary questions like the ones demonstrated in this test. Don’t give up, and keep pushing yourself! You can do it!");
+
+    var endTimer;
+    switch (currentLevel) {
+        case 1:
+            failSound_easy.play();
+            var endTitle = createElement('h4', failAudio_easy.text);
+            endTimer = 36000;
+            break;
+        case 2:
+            failSound_medium.play();
+            var endTitle = createElement('h4', failAudio_medium.text);
+            endTimer = 19000;
+            break;
+        case 3:
+            if (!lastAnswer) {
+                failSound_hard.play();
+                var endTitle = createElement('h4', failAudio_hard[randomHard].text);
+                endTimer = 6000;
+            } else {
+                failSound_bonus.play();
+                var endTitle = createElement('h4', failAudio_bonus.text);
+                endTimer = 18000;
+            }
+            break;
+    }
+
+
     endTitle.class('end');
     setTimeout(function() {
         location.reload();
-    }, 36000);
+    }, endTimer);
 }
 
 function keyPressed() {

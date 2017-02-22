@@ -20,39 +20,39 @@ var port = new SerialPort("/dev/cu.usbmodem1421", {
 app.use(express.static('public'));
 console.log("Server running on 8082");
 
-//console.log(port.isOpen());
+console.log(port.isOpen());
 
-try {
-    io.sockets.on('connection', function(socket) {
-        //if (!port.isOpen) {
-        port.open(function(error) {
-            port.resume();
-            if (error) {
-                console.log('failed to open: ' + error);
-            } else {
-                console.log('Serial open');
-                socket.on('toServer', function(data) {
-                    console.log('right answer:', data.answer);
-                    port.write(data.answer + " \n");
-                    console.log("port is open: " + port.isOpen());
-                });
-
-
-                port.on("data", function(data) {
-                    console.log("user answer:" + parseInt(data));
-                    socket.emit('toClient', {
-                        button: parseInt(data)
-                    });
-
-                });
-                socket.on('disconnect', function() {
-                    console.log("Client has disconnected");
-                    port.close();
-                });
-            }
-        });
-        //}
-    });
-} catch (error) {
-    console.log(error);
-}
+// try {
+//     io.sockets.on('connection', function(socket) {
+//         //if (!port.isOpen) {
+//         port.open(function(error) {
+//             port.resume();
+//             if (error) {
+//                 console.log('failed to open: ' + error);
+//             } else {
+//                 console.log('Serial open');
+//                 socket.on('toServer', function(data) {
+//                     console.log('right answer:', data.answer);
+//                     port.write(data.answer + " \n");
+//                     console.log("port is open: " + port.isOpen());
+//                 });
+//
+//
+//                 port.on("data", function(data) {
+//                     console.log("user answer:" + parseInt(data));
+//                     socket.emit('toClient', {
+//                         button: parseInt(data)
+//                     });
+//
+//                 });
+//                 socket.on('disconnect', function() {
+//                     console.log("Client shas disconnected");
+//                     port.close();
+//                 });
+//             }
+//         });
+//         //}
+//     });
+// } catch (error) {
+//     console.log(error);
+// }
