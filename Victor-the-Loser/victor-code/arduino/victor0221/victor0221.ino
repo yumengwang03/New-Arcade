@@ -8,8 +8,8 @@ Servo servo5;
 Servo servo6;
 
 const int button1 = 2;
-const int button2 = 3;
-const int button3 = 4;
+const int button2 = 4;
+const int button3 = 3;
 const int button4 = 5;
 const int button5 = 6;
 const int button6 = 7;
@@ -108,84 +108,39 @@ void loop() {
   if ((timedOut == false) && (timedOut2 == false) && ((millis() - timer) > INTERVAL2)) {
     switch (answer.toInt()) {
       case 31:
-        for (pos = 0; pos <= turnAngle; pos += 1) {
-          servo3.write(pos);
-          delay(3);
-        }
-        for (pos = turnAngle; pos >= 0; pos -= 1) {
-          servo3.write(pos);
-          delay(3);
-        }
+        servo3.write(turnAngle);
+        delay(800);
+        servo3.write(0);
         //Serial.println("The answer is " + answer + ". The third servo turns.");
         break;
       case 32:
-
-        for (pos = 0; pos <= turnAngle; pos += 1) {
-          servo4.write(pos);
-          delay(3);
-        }
-        for (pos = turnAngle; pos >= 0; pos -= 1) {
-          servo4.write(pos);
-          delay(3);
-        }
+        servo4.write(0);
+        delay(800);
+        servo4.write(turnAngle);
         // Serial.println("The answer is " + answer + ". The forth servo turns.");
         break;
       case 33:
-
-        for (pos = 0; pos <= turnAngle; pos += 1) {
-          servo6.write(pos);
-          delay(3);
-        }
-        for (pos = turnAngle; pos >= 0; pos -= 1) {
-          servo6.write(pos);
-          delay(3);
-        }
+        servo6.write(turnAngle);
+        delay(800);
+        servo6.write(0);
         //Serial.println("The answer is " + answer + ". The sixth servo turns.");
         break;
       case 34:
-
-        for (pos = 0; pos <= turnAngle; pos += 1) {
-          servo1.write(pos);
-          delay(3);
-        }
-        for (pos = turnAngle; pos >= 0; pos -= 1) {
-          servo1.write(pos);
-          delay(3);
-        }
+        servo1.write(turnAngle);
+        delay(800);
+        servo1.write(0);
         // Serial.println("The answer is " + answer + ". The first servo turns.");
         break;
       case 35:
-
-        for (pos = 0; pos <= turnAngle; pos += 1) {
-          servo2.write(pos);
-          delay(3);
-        }
-        for (pos = turnAngle; pos >= 0; pos -= 1) {
-          servo2.write(pos);
-          delay(3);
-        }
+        servo2.write(turnAngle);
+        delay(800);
+        servo2.write(0);
         // Serial.println("The answer is " + answer + ". The second servo turns.");
         break;
       case 36:
-
-        for (pos = 0; pos <= turnAngle; pos += 1) {
-          servo5.write(pos);
-          delay(3);
-        }
-        for (pos = turnAngle; pos >= 0; pos -= 1) {
-          servo5.write(pos);
-          delay(3);
-        }
-       case 37:
-
-        for (pos = 0; pos <= turnAngle; pos += 1) {
-          servo5.write(pos);
-          delay(3);
-        }
-        for (pos = turnAngle; pos >= 0; pos -= 1) {
-          servo5.write(pos);
-          delay(3);
-        }
+        servo3.write(turnAngle);
+        delay(800);
+        servo3.write(0);
         //Serial.println("The answer is " + answer + ". The third servo turns.");
         break;
       default:
@@ -198,84 +153,39 @@ void loop() {
   if ((timedOut == false) && ((millis() - timer) > INTERVAL)) {
     switch (answer.toInt()) {
       case 21:
-        for (pos = 0; pos <= turnAngle; pos += 1) {
-          servo3.write(pos);
-          delay(3);
-        }
-        for (pos = turnAngle; pos >= 0; pos -= 1) {
-          servo3.write(pos);
-          delay(3);
-        }
+        servo3.write(turnAngle);
+        delay(800);
+        servo3.write(0);
         //Serial.println("The answer is " + answer + ". The third servo turns.");
         break;
       case 22:
-
-        for (pos = 0; pos <= turnAngle; pos += 1) {
-          servo4.write(pos);
-          delay(3);
-        }
-        for (pos = turnAngle; pos >= 0; pos -= 1) {
-          servo4.write(pos);
-          delay(3);
-        }
+        servo4.write(0);
+        delay(800);
+        servo4.write(turnAngle);
         // Serial.println("The answer is " + answer + ". The forth servo turns.");
         break;
       case 23:
-
-        for (pos = 0; pos <= turnAngle; pos += 1) {
-          servo6.write(pos);
-          delay(3);
-        }
-        for (pos = turnAngle; pos >= 0; pos -= 1) {
-          servo6.write(pos);
-          delay(3);
-        }
+        servo6.write(turnAngle);
+        delay(800);
+        servo6.write(0);
         //Serial.println("The answer is " + answer + ". The sixth servo turns.");
         break;
       case 24:
-
-        for (pos = 0; pos <= turnAngle; pos += 1) {
-          servo1.write(pos);
-          delay(3);
-        }
-        for (pos = turnAngle; pos >= 0; pos -= 1) {
-          servo1.write(pos);
-          delay(3);
-        }
+        servo1.write(turnAngle);
+        delay(800);
+        servo1.write(0);
         // Serial.println("The answer is " + answer + ". The first servo turns.");
         break;
       case 25:
-
-        for (pos = 0; pos <= turnAngle; pos += 1) {
-          servo2.write(pos);
-          delay(3);
-        }
-        for (pos = turnAngle; pos >= 0; pos -= 1) {
-          servo2.write(pos);
-          delay(3);
-        }
+        servo2.write(turnAngle);
+        delay(800);
+        servo2.write(0);
         // Serial.println("The answer is " + answer + ". The second servo turns.");
         break;
       case 26:
-
-        for (pos = 0; pos <= turnAngle; pos += 1) {
-          servo5.write(pos);
-          delay(3);
-        }
-        for (pos = turnAngle; pos >= 0; pos -= 1) {
-          servo5.write(pos);
-          delay(3);
-        }
-        case 27:
-
-        for (pos = 0; pos <= turnAngle; pos += 1) {
-          servo5.write(pos);
-          delay(3);
-        }
-        for (pos = turnAngle; pos >= 0; pos -= 1) {
-          servo5.write(pos);
-          delay(3);
-        }
+        servo3.write(turnAngle);
+        delay(800);
+        servo3.write(0);
         //Serial.println("The answer is " + answer + ". The third servo turns.");
         break;
       default:

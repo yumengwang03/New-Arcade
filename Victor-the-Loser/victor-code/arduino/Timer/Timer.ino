@@ -8,8 +8,8 @@ Servo servoFive;
 Servo servoSix;
 
 const int button1 = 2;
-const int button2 = 3;
-const int button3 = 4;
+const int button2 = 4;
+const int button3 = 3;
 const int button4 = 5;
 const int button5 = 6;
 const int button6 = 7;

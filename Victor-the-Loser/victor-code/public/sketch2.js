@@ -7,7 +7,7 @@ var isAnswered = false;
 var buttonNumber = 6;
 var timer; // timer for setInterval in timing function
 var countdown;
-var questionTime = 12000; // time allowed for each question
+var questionTime = 4000; // time allowed for each question
 var timeIndicator;
 
 // start screen
@@ -74,6 +74,7 @@ var level3Started = false;
 var lastQuestion = false;
 var lastAnswer = false;
 var randomHard = 0;
+var bonusStarted = false;
 
 
 var questionListRaw = [{
@@ -344,7 +345,7 @@ function draw() {
 
         }
 
-        if (level3Started && !lastAnswer) {
+        if (level3Started && !lastAnswer && !bonusStarted) {
             if (randomMode == 0) {
                 speed = random(-10, 10);
                 if (qTitle != undefined) {
@@ -363,19 +364,9 @@ function draw() {
                     qOptions[i].style('color', col);
                 }
             } else if (randomMode == 2) {
-                //qTitle.style('font-size', Math.round(random(12, 16))+ 'px');
-                // console.log(fontSize);
-                //
-                //
-                // if (fontSize < 20) {
-                //     fontSize += speed;
-                // } else if (fontSize => 20) {
-                //     fontSize -= speed;
-                // }
-                // qTitle.style('font-size', fontSize + speed + 'px');
-                // for (var i = 0; i < buttonNumber; i++) {
-                //     qOptions[i].style('font-size', fontSize + speed + 'px');
-                // }
+                if (qTitle != undefined) {
+                    qTitle.position(windowWidth / 5 + speed, 50);
+                }
 
             }
         }
@@ -386,6 +377,9 @@ function draw() {
 
 
 }
+
+var posX, posY;
+var angle = 0;
 
 //var fontSize = 10;
 
@@ -405,7 +399,7 @@ function correct() {
 function incorrect() {
     document.body.style.backgroundColor = "red";
     if (currentLevel > 1 && currentLevel <= 3 && !lastAnswer && !lastQuestion) {
-        currentLevel--;
+        //currentLevel--;
     }
 
     //console.log("incorrect");
@@ -417,7 +411,7 @@ function incorrect() {
 }
 
 function startScreen() {
-    mainTitle = createElement('h3', "Hi, I'm Victor! Do you want to play a game with me? Press any button to start.");
+    mainTitle = createElement('h3', "Hi, I'm Victor! Do you want to play a game with me? <br><br>Press any button to start.");
     mainTitle.class('_mainTitle');
 }
 
@@ -442,6 +436,9 @@ function timing() {
                 qIndex++;
                 if (qIndex == qNum - 2) {
                     lastQuestion = true;
+                }
+                if (qIndex == qNum ) {
+                    bonusStarted = true;
                 }
             }
             if (currentLevel == 3) {
@@ -473,7 +470,9 @@ function randomIndex() {
     for (var j = 0; j < buttonNumber; j++) {
         startList.push(questionListRaw[startOrder[j]]);
     }
-    startList.push(essayQuestion[Math.round(Math.random() * 3)]);
+    var essayIndex = Math.round(Math.random() * 2);
+    startList.push(essayQuestion[essayIndex]);
+    //console.log("essay question will be " + essayIndex);
     //console.log(startList);
 
     //test = [questionListRaw[0], questionListRaw[1], questionListRaw[2], questionListRaw[3], questionListRaw[4], questionListRaw[5], questionListRaw[6]];
@@ -494,8 +493,25 @@ function getQuestion(index) {
     result = 0;
     gotAnswer = false;
     buttonPressed = 0;
+    if (index == qNum - 1) {
+        setTimeout(function() {
+            console.log("start dancing");
+            socket.emit('toServer', {
+                answer: 8
+            });
+        }, questionTime);
+
+    }
     if (index >= qNum) {
         // no more questions
+
+
+        // socket.emit('toServer', {
+        //     answer: 8
+        // });
+        // console.log("start dancing");
+
+
         clearInterval(timer);
         console.log("finished!");
         endScreen();
@@ -556,7 +572,11 @@ function endScreen() {
     gotAnswer = false;
     rightAnswer = 0;
 
-    console.log("final result is: " + currentLevel);
+    // socket.emit('toServer', {
+    //     answer: rightAnswer
+    // });
+
+    // console.log("start dancing " + rightAnswer);
 
     qTitle.remove();
     for (var i = 0; i < buttonNumber; i++) {
@@ -577,7 +597,7 @@ function endScreen() {
             endTimer = 19000;
             break;
         case 3:
-            if (!lastAnswer) {
+            if (!bonusStarted) {
                 failSound_hard.play();
                 var endTitle = createElement('h4', failAudio_hard[randomHard].text);
                 endTimer = 6000;
