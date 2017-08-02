@@ -7,7 +7,7 @@ var isAnswered = false;
 var buttonNumber = 6;
 var timer; // timer for setInterval in timing function
 var countdown;
-var questionTime = 4000; // time allowed for each question
+var questionTime = 12000; // time allowed for each question
 var timeIndicator;
 
 // start screen
@@ -21,6 +21,7 @@ var qNum = 7; // numbers of questions
 
 // Arduino stuff
 var buttonPressed = 0;
+
 
 var rightAnswer = 0;
 var runTime = 0;
@@ -157,12 +158,6 @@ var questionListRaw = [{
     },
     {
         "isText": true,
-        "question": "Which number does not fit in the sequence?",
-        "options": [2, 4, 10, 28, 84, 244],
-        "answer": 5
-    },
-    {
-        "isText": true,
         "question": "If you count from one to hundred, how many threes will you pass on the way?",
         "options": [22, 19, 20, 28, 10, 21],
         "answer": 3
@@ -178,12 +173,6 @@ var questionListRaw = [{
         "question": "Which of the following is a noun meaning social awkwardness?",
         "options": ["Vertigo", "Behemoth", "Gaucherie", "Hovel", "Mendacity", "Curmudgeon"],
         "answer": 3
-    },
-    {
-        "isText": true,
-        "question": "Which of the following is a noun meaning &ldquo;a distorted representation of something&rdquo;?",
-        "options": ["Parapet", "Altruism", "Utopia", "Verbiage", "Travesty", "Complicity"],
-        "answer": 5
     },
     {
         "isText": true,
@@ -257,13 +246,26 @@ function preload() {
     failSound_bonus = loadSound(failAudio_bonus.fileName);
 }
 
+var lastButtonPressed = 0;
+var userButtonPressed;
 function setup() {
     socket = io.connect('http://localhost:8082');
     socket.on('toClient', function(data) {
+        // if (data.button != null) {
+        //     buttonPressed = data.button;
+        //     console.log(buttonPressed);
+        // }
+
         if (data.button != null) {
-            buttonPressed = data.button;
-            console.log(buttonPressed);
+            userButtonPressed = data.button;
+            console.log(userButtonPressed);
+            if(userButtonPressed != lastButtonPressed) {
+              console.log("new pressed: " + userButtonPressed);
+              lastButtonPressed = userButtonPressed;
+            }
+            buttonPressed = userButtonPressed;
         }
+
     });
     noCanvas();
     timeIndicator = createElement('h1', '');
